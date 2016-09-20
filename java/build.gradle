@@ -1,0 +1,98 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+  dependencies {
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+    classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
+  }
+}
+
+
+protobuf {
+  protoc {
+    // The version of protoc must match protobuf-java. If you don't depend on
+    // protobuf-java directly, you will be transitively depending on the
+    // protobuf-java version that grpc depends on.
+    artifact = "com.google.protobuf:protoc:3.0.0"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.0.0'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+  generatedFilesBaseDir = "$projectDir/gen"
+}
+
+
+repositories {
+  maven {
+    url "https://repo1.maven.org/maven2"
+  }
+
+  flatDir {
+    dirs 'lib'
+  }
+
+}
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'lib')
+
+  compile group: 'com.google.guava', name: 'guava', version: '+'
+
+  compile group: 'io.grpc', name: 'grpc-netty', version: '1.0.0'
+  compile group: 'io.grpc', name: 'grpc-protobuf', version: '1.0.0'
+  compile group: 'io.grpc', name: 'grpc-stub', version: '1.0.0'
+
+}
+
+
+sourceSets {
+  main {
+    java {
+      srcDirs = ['src', 'gen/main/java', 'gen/main/grpc']
+    }
+
+    resources {
+      srcDirs = ['res']
+    }
+
+    proto {
+      srcDirs = ['../proto']
+    }
+  }
+}
+
+allprojects {
+  gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+      options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+    [ compileJava, compileTestJava ]*.options*.encoding = 'UTF-8'
+  }
+}
+
+jar {
+  manifest {
+    attributes (
+      "Main-Class": "Main"
+    )
+  }
+}
+
+defaultTasks "shadowJar"

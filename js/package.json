@@ -1,0 +1,13 @@
+{
+  "name": "burppipe",
+  "version": "0.0.2",
+  "description": "Worker to run scripts sent from Burp",
+  "main": "server.js",
+  "scripts": {
+  },
+  "author": "Jeff Dileo",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "grpc": "1.0.0"
+  }
+}
