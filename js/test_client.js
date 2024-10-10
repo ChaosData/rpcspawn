@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2016 NCC Group Security Services, Inc. All rights reserved.
+Licensed under Dual BSD/GPLv2 per the repo LICENSE file.
+*/
+
 var fs = require('fs');
 var ProtoBuf = require('protobufjs');
 var grpc = require('grpc');

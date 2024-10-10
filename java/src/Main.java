@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2016 NCC Group Security Services, Inc. All rights reserved.
+Licensed under Dual BSD/GPLv2 per the repo LICENSE file.
+*/
+
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NegotiationType;

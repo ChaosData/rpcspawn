@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2016 NCC Group Security Services, Inc. All rights reserved.
+Licensed under Dual BSD/GPLv2 per the repo LICENSE file.
+*/
+
 import org.apache.commons.codec.binary.Base64;
 import sun.security.tools.keytool.CertAndKeyGen;
 import sun.security.x509.X500Name;
